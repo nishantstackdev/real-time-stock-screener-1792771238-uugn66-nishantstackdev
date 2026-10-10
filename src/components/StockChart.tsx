@@ -110,8 +110,8 @@ export default function StockChart({ symbol, basePrice }: StockChartProps) {
         lowerData.push({ time: ohlcData[i].time, value: Number((sma - (2 * stdDev)).toFixed(2)) });
       }
 
-      const upperSeries = chart.addSeries(LineSeries, { color: '#EC4899', lineWidth: 1.5 });
-      const lowerSeries = chart.addSeries(LineSeries, { color: '#EC4899', lineWidth: 1.5 });
+      const upperSeries = chart.addSeries(LineSeries, { color: '#EC4899', lineWidth: 2 });
+      const lowerSeries = chart.addSeries(LineSeries, { color: '#EC4899', lineWidth: 2 });
       upperSeries.setData(upperData);
       lowerSeries.setData(lowerData);
     }
@@ -164,18 +164,17 @@ export default function StockChart({ symbol, basePrice }: StockChartProps) {
           <h2 className="text-lg font-bold tracking-tight">{symbol} - Price Chart</h2>
           <p className="text-xs text-gray-500">Interactive Technical Indicators & Overlays</p>
         </div>
-        
+
         {/* Indicator Selection Buttons */}
         <div className="flex flex-wrap items-center gap-1.5">
           {(['SMA', 'EMA', 'Bollinger', 'RSI', 'Volume'] as IndicatorType[]).map((ind) => (
             <button
               key={ind}
               onClick={() => setActiveIndicator(ind)}
-              className={`px-2.5 py-1 text-xs font-semibold rounded-lg transition ${
-                activeIndicator === ind
+              className={`px-2.5 py-1 text-xs font-semibold rounded-lg transition ${activeIndicator === ind
                   ? 'bg-blue-600 text-white shadow'
                   : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
-              }`}
+                }`}
             >
               {ind}
             </button>
