@@ -3,9 +3,12 @@ import { Stock, FilterConfig } from '@/types/stock';
 export function filterStocks(stocks: Stock[], filters: FilterConfig[], searchQuery: string): Stock[] {
   if (!stocks || stocks.length === 0) return [];
 
+  // ⏱️ Benchmark start timer
+  console.time('Filter Engine Latency');
+
   const query = searchQuery.trim().toLowerCase();
 
-  return stocks.filter((stock) => {
+  const filteredResult = stocks.filter((stock) => {
     // 1. Search Query Filter (Symbol or Company Name)
     if (query) {
       const matchesSymbol = stock.symbol.toLowerCase().includes(query);
@@ -50,7 +53,6 @@ export function filterStocks(stocks: Stock[], filters: FilterConfig[], searchQue
 
         case 'in':
           if (Array.isArray(targetValue)) {
-            // Convert both to string for safe comparison
             const strValue = String(fieldValue);
             const strTargetArray = targetValue.map(String);
             if (!strTargetArray.includes(strValue)) return false;
@@ -59,6 +61,11 @@ export function filterStocks(stocks: Stock[], filters: FilterConfig[], searchQue
       }
     }
 
-    return true; // Sab pass hua toh stock include hoga
+    return true;
   });
+
+  // ⏱️ Benchmark end timer
+  // console.timeEnd('Filter Engine Latency');
+
+  return filteredResult;
 }
