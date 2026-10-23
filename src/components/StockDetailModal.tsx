@@ -9,7 +9,6 @@ export default function StockDetailModal() {
 
   const selectedStock = stocks.find((s) => s.symbol === selectedSymbol);
 
-
   if (!selectedStock) return null;
 
   return (
@@ -20,7 +19,7 @@ export default function StockDetailModal() {
         <div className="flex items-center justify-between p-4 sm:p-6 border-b border-gray-200 dark:border-gray-800">
           <div>
             <div className="flex items-center gap-3">
-              <h2 className="text-xl font-bold tracking-tight">{selectedStock.name}</h2>
+              <h2 className="text-xl font-bold tracking-tight">{selectedStock.companyName}</h2>
               <span className="text-xs px-2 py-0.5 rounded font-mono bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300">
                 {selectedStock.symbol}
               </span>
@@ -42,12 +41,12 @@ export default function StockDetailModal() {
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             <div className="p-3 bg-gray-50 dark:bg-gray-800/50 rounded-xl border border-gray-100 dark:border-gray-800">
               <span className="text-xs text-gray-500">LTP (₹)</span>
-              <p className="text-base font-bold font-mono mt-1">₹{selectedStock.price.toLocaleString('en-IN')}</p>
+              <p className="text-base font-bold font-mono mt-1">₹{selectedStock.lastPrice.toLocaleString('en-IN')}</p>
             </div>
             <div className="p-3 bg-gray-50 dark:bg-gray-800/50 rounded-xl border border-gray-100 dark:border-gray-800">
               <span className="text-xs text-gray-500">24h Change</span>
-              <p className={`text-base font-bold font-mono mt-1 ${selectedStock.change >= 0 ? 'text-green-500' : 'text-red-500'}`}>
-                {selectedStock.change >= 0 ? '+' : ''}{selectedStock.change.toFixed(2)}%
+              <p className={`text-base font-bold font-mono mt-1 ${selectedStock.changePercent >= 0 ? 'text-green-500' : 'text-red-500'}`}>
+                {selectedStock.changePercent >= 0 ? '+' : ''}{selectedStock.changePercent.toFixed(2)}%
               </p>
             </div>
             <div className="p-3 bg-gray-50 dark:bg-gray-800/50 rounded-xl border border-gray-100 dark:border-gray-800">
@@ -56,12 +55,12 @@ export default function StockDetailModal() {
             </div>
             <div className="p-3 bg-gray-50 dark:bg-gray-800/50 rounded-xl border border-gray-100 dark:border-gray-800">
               <span className="text-xs text-gray-500">P/E Ratio</span>
-              <p className="text-base font-bold font-mono mt-1">{selectedStock.peRatio}</p>
+              <p className="text-base font-bold font-mono mt-1">{(selectedStock as any).pe}</p>
             </div>
           </div>
 
           {/* Interactive TradingView Chart */}
-          <StockChart symbol={selectedStock.symbol} basePrice={selectedStock.price} />
+          <StockChart symbol={selectedStock.symbol} basePrice={selectedStock.lastPrice} />
         </div>
       </div>
     </div>
