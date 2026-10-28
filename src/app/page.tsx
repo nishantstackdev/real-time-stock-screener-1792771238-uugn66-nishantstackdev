@@ -37,40 +37,43 @@ export default function Home() {
   if (!isMounted) return null;
 
   return (
-    <main className="p-4 md:p-6 max-w-7xl mx-auto space-y-6">
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div className="space-y-1">
-          <h1 className="text-xl md:text-2xl font-bold tracking-tight">EquityPulse Screener 🔥</h1>
-          <p className="text-xs md:text-sm text-gray-500">Real-time Stock Data Grid with 5,000+ Virtualised Rows & Financial Charting</p>
+    <main className="w-full max-w-7xl mx-auto px-3 sm:px-6 py-4 sm:py-6 space-y-4 sm:space-y-6 overflow-x-hidden">
+      {/* Header & Mobile Filter Button */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 md:gap-4">
+        <div className="space-y-0.5 sm:space-y-1">
+          <h1 className="text-lg sm:text-2xl font-bold tracking-tight">EquityPulse Screener 🔥</h1>
+          <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
+            Real-time Stock Data Grid with 5,000+ Virtualised Rows & Financial Charting
+          </p>
         </div>
 
         {/* Mobile/Tablet Filter Toggle Button */}
         <button
           onClick={() => setIsMobileFilterOpen(true)}
-          className="lg:hidden flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-sm font-semibold shadow-md transition"
+          className="lg:hidden flex items-center justify-center gap-2 w-full sm:w-auto px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs sm:text-sm font-semibold shadow-sm transition active:scale-[0.98]"
         >
           <SlidersHorizontal className="w-4 h-4" />
           <span>Filters {activeFilters.length > 0 ? `(${activeFilters.length})` : ''}</span>
         </button>
       </div>
 
-      {/* Selected Stock Chart */}
+      {/* Selected Stock Chart Wrapper */}
       {selectedStockObj && (
-        <div className="w-full overflow-hidden">
+        <div className="w-full max-w-full overflow-hidden">
           <StockChart symbol={selectedStockObj.symbol} basePrice={selectedStockObj.lastPrice} />
         </div>
       )}
 
       {/* Responsive Layout */}
-      <div className="flex gap-6 items-start relative">
+      <div className="flex gap-6 items-start relative w-full min-w-0">
         {/* Filter Panel (Drawer on mobile, sticky sidebar on desktop) */}
         <FilterPanel 
           isOpen={isMobileFilterOpen} 
           onClose={() => setIsMobileFilterOpen(false)} 
         />
         
-        {/* Data Grid */}
-        <div className="w-full overflow-x-auto flex-1">
+        {/* Data Grid Wrapper */}
+        <div className="w-full min-w-0 flex-1 overflow-hidden">
           <DataGrid data={filteredStocks} />
         </div>
       </div>
